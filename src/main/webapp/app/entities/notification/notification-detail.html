@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span data-translate="greenorionApp.notification.detail.title">Notification</span> {{vm.notification.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="greenorionApp.notification.orionId">Orion Id</span></dt>
+        <dd>
+            <span>{{vm.notification.orionId}}</span>
+        </dd>
+        <dt><span data-translate="greenorionApp.notification.type">Type</span></dt>
+        <dd>
+            <span>{{vm.notification.type}}</span>
+        </dd>
+        <dt><span data-translate="greenorionApp.notification.latitud">Latitud</span></dt>
+        <dd>
+            <span>{{vm.notification.latitud}}</span>
+        </dd>
+        <dt><span data-translate="greenorionApp.notification.longitud">Longitud</span></dt>
+        <dd>
+            <span>{{vm.notification.longitud}}</span>
+        </dd>
+        <dt><span data-translate="greenorionApp.notification.o3">O 3</span></dt>
+        <dd>
+            <span>{{vm.notification.o3}}</span>
+        </dd>
+        <dt><span data-translate="greenorionApp.notification.name">Name</span></dt>
+        <dd>
+            <span>{{vm.notification.name}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="notification-detail.edit({id:vm.notification.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>
