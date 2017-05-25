@@ -75,13 +75,10 @@ public class NotificationController {
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createNotification(@RequestBody OrionAlert orionAlert, UriComponentsBuilder ucBuilder) {
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println(mapper.convertValue(orionAlert, String.class));
         Notification notification = repository.save(new Notification(orionAlert));
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(notification.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = "text/plain")

@@ -37,9 +37,12 @@ public class Subscription implements Serializable {
     private String attrCondition;
 
     @NotNull
-    @Pattern(regexp = "^[a-zA-Z0-9]*$")
+    @Pattern(regexp = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]")
     @Field("orion_url")
     private String orionUrl;
+    
+    @Field("subscription_id")
+    private String subscriptionId;
 
     @NotNull
     @Field("returned_attr")
@@ -153,14 +156,16 @@ public class Subscription implements Serializable {
 
     @Override
     public String toString() {
-        return "Subscription{" +
-            "id=" + id +
-            ", entityId='" + entityId + "'" +
-            ", entityType='" + entityType + "'" +
-            ", description='" + description + "'" +
-            ", attrCondition='" + attrCondition + "'" +
-            ", orionUrl='" + orionUrl + "'" +
-            ", returnedAttr='" + returnedAttr + "'" +
-            '}';
+        return "Subscription{" + "id=" + id + ", entityId='" + entityId + "'" + ", entityType='" + entityType + "'"
+                + ", description='" + description + "'" + ", attrCondition='" + attrCondition + "'" + ", orionUrl='"
+                + orionUrl + "'" + ", returnedAttr='" + returnedAttr + "'" + '}';
+    }
+
+    public String getSubscriptionId() {
+        return subscriptionId;
+    }
+
+    public void setSubscriptionId(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 }

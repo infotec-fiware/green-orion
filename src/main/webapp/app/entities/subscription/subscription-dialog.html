@@ -65,7 +65,7 @@
             <label class="control-label" data-translate="greenorionApp.subscription.orionUrl" for="field_orionUrl">Orion Url</label>
             <input type="text" class="form-control" name="orionUrl" id="field_orionUrl"
                     ng-model="vm.subscription.orionUrl"
-                    required ng-pattern="/^[a-zA-Z0-9]*$/"/>
+                    required/>
             <div ng-show="editForm.orionUrl.$invalid">
                 <p class="help-block"
                     ng-show="editForm.orionUrl.$error.required" data-translate="entity.validation.required">
