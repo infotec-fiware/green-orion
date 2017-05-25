@@ -1,12 +1,16 @@
 package mx.infotec.dads.greenorion.domain;
 
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.*;
-import java.io.Serializable;
-import java.util.Objects;
+import mx.infotec.dads.greenorion.service.util.OrionNotificationMapper;
 
 /**
  * A Notification.
@@ -15,147 +19,166 @@ import java.util.Objects;
 @Document(collection = "notification")
 public class Notification implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    private String id;
+	public Notification() {
 
-    @Field("orion_id")
-    private String orionId;
+	}
 
-    @Field("type")
-    private String type;
+	public Notification(OrionAlert orionAlert) {
+		this.setOrionAlert(orionAlert);
+		Data data = orionAlert.getData().get(0);
+		this.orionId = data.getId();
+		this.type = data.getType();
+		this.latitud = OrionNotificationMapper.extractProperty(data, "latitud");
+		this.longitud = OrionNotificationMapper.extractProperty(data, "longitud");
+		this.o3 = OrionNotificationMapper.extractIntegerProperty(data, "o3");
+		this.name = OrionNotificationMapper.extractProperty(data, "nombre");
+	}
 
-    @Field("latitud")
-    private String latitud;
+	@Id
+	private String id;
 
-    @Field("longitud")
-    private String longitud;
+	@Field("orion_id")
+	private String orionId;
 
-    @NotNull
-    @Min(value = 1)
-    @Field("o_3")
-    private Integer o3;
+	@Field("type")
+	private String type;
 
-    @Field("name")
-    private String name;
+	@Field("latitud")
+	private String latitud;
 
-    public String getId() {
-        return id;
-    }
+	@Field("longitud")
+	private String longitud;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	@NotNull
+	@Min(value = 1)
+	@Field("o_3")
+	private Integer o3;
 
-    public String getOrionId() {
-        return orionId;
-    }
+	@Field("name")
+	private String name;
 
-    public Notification orionId(String orionId) {
-        this.orionId = orionId;
-        return this;
-    }
+	private OrionAlert orionAlert;
 
-    public void setOrionId(String orionId) {
-        this.orionId = orionId;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public Notification type(String type) {
-        this.type = type;
-        return this;
-    }
+	public String getOrionId() {
+		return orionId;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public Notification orionId(String orionId) {
+		this.orionId = orionId;
+		return this;
+	}
 
-    public String getLatitud() {
-        return latitud;
-    }
+	public void setOrionId(String orionId) {
+		this.orionId = orionId;
+	}
 
-    public Notification latitud(String latitud) {
-        this.latitud = latitud;
-        return this;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setLatitud(String latitud) {
-        this.latitud = latitud;
-    }
+	public Notification type(String type) {
+		this.type = type;
+		return this;
+	}
 
-    public String getLongitud() {
-        return longitud;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public Notification longitud(String longitud) {
-        this.longitud = longitud;
-        return this;
-    }
+	public String getLatitud() {
+		return latitud;
+	}
 
-    public void setLongitud(String longitud) {
-        this.longitud = longitud;
-    }
+	public Notification latitud(String latitud) {
+		this.latitud = latitud;
+		return this;
+	}
 
-    public Integer geto3() {
-        return o3;
-    }
+	public void setLatitud(String latitud) {
+		this.latitud = latitud;
+	}
 
-    public Notification o3(Integer o3) {
-        this.o3 = o3;
-        return this;
-    }
+	public String getLongitud() {
+		return longitud;
+	}
 
-    public void seto3(Integer o3) {
-        this.o3 = o3;
-    }
+	public Notification longitud(String longitud) {
+		this.longitud = longitud;
+		return this;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
+	}
 
-    public Notification name(String name) {
-        this.name = name;
-        return this;
-    }
+	public Integer geto3() {
+		return o3;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public Notification o3(Integer o3) {
+		this.o3 = o3;
+		return this;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Notification notification = (Notification) o;
-        if (notification.id == null || id == null) {
-            return false;
-        }
-        return Objects.equals(id, notification.id);
-    }
+	public void seto3(Integer o3) {
+		this.o3 = o3;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public String toString() {
-        return "Notification{" +
-            "id=" + id +
-            ", orionId='" + orionId + "'" +
-            ", type='" + type + "'" +
-            ", latitud='" + latitud + "'" +
-            ", longitud='" + longitud + "'" +
-            ", o3='" + o3 + "'" +
-            ", name='" + name + "'" +
-            '}';
-    }
+	public Notification name(String name) {
+		this.name = name;
+		return this;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public OrionAlert getOrionAlert() {
+		return orionAlert;
+	}
+
+	public void setOrionAlert(OrionAlert orionAlert) {
+		this.orionAlert = orionAlert;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Notification notification = (Notification) o;
+		if (notification.id == null || id == null) {
+			return false;
+		}
+		return Objects.equals(id, notification.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(id);
+	}
+
+	@Override
+	public String toString() {
+		return "Notification{" + "id=" + id + ", orionId='" + orionId + "'" + ", type='" + type + "'" + ", latitud='"
+				+ latitud + "'" + ", longitud='" + longitud + "'" + ", o3='" + o3 + "'" + ", name='" + name + "'" + '}';
+	}
+
 }

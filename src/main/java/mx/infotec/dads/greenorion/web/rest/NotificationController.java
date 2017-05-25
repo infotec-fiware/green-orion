@@ -28,7 +28,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.endpoint.AutoConfigurationReportEndpoint.Report;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -92,16 +91,6 @@ public class NotificationController {
         headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(notification.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 
-    }
-
-    /**
-     * GET ALL recupera todos los DataStore
-     * 
-     * @return List<DataStore>
-     */
-    @RequestMapping(value = "/count", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Report> getLastNotification() {
-        return new ResponseEntity<Report>(new Report(repository.count()), HttpStatus.OK);
     }
 
     /**
