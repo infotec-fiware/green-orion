@@ -1,0 +1,102 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="mySubscriptionLabel" data-translate="greenorionApp.subscription.home.createOrEditLabel">Create or edit a Subscription</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.subscription.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.subscription.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="greenorionApp.subscription.entityId" for="field_entityId">Entity Id</label>
+            <input type="text" class="form-control" name="entityId" id="field_entityId"
+                    ng-model="vm.subscription.entityId"
+                    required/>
+            <div ng-show="editForm.entityId.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.entityId.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="greenorionApp.subscription.entityType" for="field_entityType">Entity Type</label>
+            <input type="text" class="form-control" name="entityType" id="field_entityType"
+                    ng-model="vm.subscription.entityType"
+                    required/>
+            <div ng-show="editForm.entityType.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.entityType.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="greenorionApp.subscription.description" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.subscription.description"
+                    required/>
+            <div ng-show="editForm.description.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.description.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="greenorionApp.subscription.attrCondition" for="field_attrCondition">Attr Condition</label>
+            <input type="text" class="form-control" name="attrCondition" id="field_attrCondition"
+                    ng-model="vm.subscription.attrCondition"
+                    required/>
+            <div ng-show="editForm.attrCondition.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.attrCondition.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="greenorionApp.subscription.orionUrl" for="field_orionUrl">Orion Url</label>
+            <input type="text" class="form-control" name="orionUrl" id="field_orionUrl"
+                    ng-model="vm.subscription.orionUrl"
+                    required ng-pattern="/^[a-zA-Z0-9]*$/"/>
+            <div ng-show="editForm.orionUrl.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.orionUrl.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.orionUrl.$error.pattern" data-translate="entity.validation.pattern" translate-value-pattern="^[a-zA-Z0-9]*$">
+                    This field should follow pattern "^[a-zA-Z0-9]*$".
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="greenorionApp.subscription.returnedAttr" for="field_returnedAttr">Returned Attr</label>
+            <input type="text" class="form-control" name="returnedAttr" id="field_returnedAttr"
+                    ng-model="vm.subscription.returnedAttr"
+                    required/>
+            <div ng-show="editForm.returnedAttr.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.returnedAttr.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

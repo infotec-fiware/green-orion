@@ -1,0 +1,26 @@
+{
+    "greenorionApp": {
+        "subscription" : {
+            "home": {
+                "title": "Subscriptions",
+                "createLabel": "Crear nuevo Subscription",
+                "createOrEditLabel": "Crear o editar Subscription"
+            },
+            "created": "Un nuevo Subscription ha sido creado con el identificador {{ param }}",
+            "updated": "Un Subscription ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Subscription ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Subscription {{ id }}?"
+            },
+            "detail": {
+                "title": "Subscription"
+            },
+            "entityId": "Entity Id",
+            "entityType": "Entity Type",
+            "description": "Description",
+            "attrCondition": "Attr Condition",
+            "orionUrl": "Orion Url",
+            "returnedAttr": "Returned Attr"
+        }
+    }
+}
