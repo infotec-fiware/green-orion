@@ -122,7 +122,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             http.put("method", "POST");
             notification.put("http", http);
             notification.put("attrsFormat", "keyValues");
-            notification.put("attrs", new String[] { "id", "type", "CO", "NO2", "O3" });
+            notification.put("attrs", new String[] { "id", "type", "CO", "NO2", "O3", "location" });
             request.put("notification", notification);
             // expires
             request.put("expires", "2020-04-05T14:00:00.00Z");
