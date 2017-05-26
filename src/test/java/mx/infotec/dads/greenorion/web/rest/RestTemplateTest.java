@@ -49,7 +49,6 @@ public class RestTemplateTest {
         notification.put("http", http);
         notification.put("attrsFormat", "keyValues");
         notification.put("attrs", new String[] { "id", "type", "CO", "NO2", "O3" });
-
         request.put("notification", notification);
         // expires
         request.put("expires", "2020-04-05T14:00:00.00Z");
