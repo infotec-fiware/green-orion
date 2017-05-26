@@ -31,8 +31,7 @@ public class Notification implements Serializable {
         Data data = orionAlert.getData().get(0);
         this.orionId = orionAlert.getSubscriptionId();
         this.type = data.getType();
-        ArrayList<Double> coordinates = (ArrayList<Double>) OrionNotificationMapper.extractMapProperty(data, "location")
-                .get("coordinates");
+        ArrayList<Double> coordinates = OrionNotificationMapper.extractCoordinateProperty(data);
         this.latitud = Double.toString(coordinates.get(0));
         this.longitud = Double.toString(coordinates.get(1));
         this.o3 = OrionNotificationMapper.extractIntegerProperty(data, "O3");
