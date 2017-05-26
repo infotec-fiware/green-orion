@@ -118,7 +118,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             // notification
             HashMap<String, Object> notification = new LinkedHashMap<>();
             HashMap<String, Object> http = new LinkedHashMap<>();
-            http.put("url", "http://172.17.0.1:8080/notifications");
+            http.put("url", "http://200.38.177.199:8080/notifications");
             http.put("method", "POST");
             notification.put("http", http);
             notification.put("attrsFormat", "keyValues");
