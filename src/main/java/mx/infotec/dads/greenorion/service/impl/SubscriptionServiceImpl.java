@@ -1,12 +1,7 @@
 package mx.infotec.dads.greenorion.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,17 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import mx.infotec.dads.greenorion.domain.Subscription;
-import mx.infotec.dads.greenorion.integration.orion.Condition;
-import mx.infotec.dads.greenorion.integration.orion.Entity;
-import mx.infotec.dads.greenorion.integration.orion.Http;
-import mx.infotec.dads.greenorion.integration.orion.Notification;
-import mx.infotec.dads.greenorion.integration.orion.OrionSubscription;
-import mx.infotec.dads.greenorion.integration.orion.Subject;
 import mx.infotec.dads.greenorion.repository.SubscriptionRepository;
 import mx.infotec.dads.greenorion.service.SubscriptionService;
+import mx.infotec.dads.greenorion.util.OrionSubscriptionBuilder;
 
 /**
  * Service Implementation for managing Subscription.
@@ -111,47 +99,27 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	public String doPost(String description, String id, String type, String attr, String orionUrl) {
 		try {
+			String t = OrionSubscriptionBuilder.builder()
+					.addDescription(description)
+					.addExpires("2020-04-05T14:00:00.00Z")
+					.addThrottling(1)
+					.addEntities(id, type)
+					.addCondition("pressures")
+					.addReturnedAttribute("id")
+					.addReturnedAttribute("type")
+					.addReturnedAttribute("CO")
+					.addReturnedAttribute("NO2")
+					.addReturnedAttribute("O3")
+					.addReturnedAttribute("location").addReturnedAttributesFormat("keyValues")
+					.addUrl(projectUrl + "/notifications")
+					.addMethodInvocation("POST").createJson();
 			RestTemplate restTemplate = new RestTemplate();
-			// create request body
-			OrionSubscription os = new OrionSubscription();
-			os.setDescription(description);
-			os.setExpires("2020-04-05T14:00:00.00Z");
-			os.setThrottling(1);
-			
-			
-			// create subject
-			Subject subject = new Subject();
-			// --create entity
-			Entity entity = new Entity();
-			entity.setId(id);
-			entity.setType(type);
-			subject.setEntities(Arrays.asList(new Entity[] { entity }));
-
-			// --create condition
-			Condition condition = new Condition();
-			condition.setAttrs(Arrays.asList(new String[] { "pressures" }));
-			subject.setCondition(condition);
-
-			os.setSubject(subject);
-			
-			// create notification
-			Notification notification = new Notification();
-			notification.setAttrs(Arrays.asList(new String[] { "id", "type", "CO", "NO2", "O3", "location" }));
-			notification.setAdditionalProperty("attrsFormat", "keyValues");
-			
-			Http http = new Http();
-			http.setUrl(projectUrl + "/notifications");
-			http.setAdditionalProperty("method", "POST");
-			notification.setHttp(http);
-			os.setNotification(notification);
-			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			JSONObject request = new JSONObject(os);
-			HttpEntity<String> element = new HttpEntity<String>(request.toString(), headers);
-			// send request and parse result
-			ResponseEntity<String> loginResponse = restTemplate.exchange(orionUrl, HttpMethod.POST, element,
-					String.class);
+			
+			HttpEntity<String> element = new HttpEntity<String>(t, headers);
+			ResponseEntity<String> loginResponse = restTemplate.exchange("http://green.mx:1026/v2/subscriptions",
+					HttpMethod.POST, element, String.class);
 			if (loginResponse.getStatusCode() == HttpStatus.CREATED) {
 				List<String> hedersReponse = loginResponse.getHeaders().get("location");
 				for (String string : hedersReponse) {
@@ -162,27 +130,27 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 				return null;
 			}
 		} catch (Exception e) {
-			return null;
+			throw new RuntimeException("Comunication Error", e);
 		}
 
 	}
 
 	public static void main(String[] args) {
-		OrionSubscription os = new OrionSubscription();
-		os.setDescription("Description");
-		Subject subject = new Subject();
-		// add conditions
-		Condition condition = new Condition();
-		condition.setAttrs(Arrays.asList(new String[] { "pressures" }));
-		subject.setCondition(condition);
-
-		Entity entity = new Entity();
-		entity.setId("ddfdf");
-		entity.setType("type");
-		subject.setEntities(Arrays.asList(new Entity[] { entity }));
-		JSONObject request = new JSONObject(os);
-
-		System.out.println(request.toString());
+		String t = OrionSubscriptionBuilder.builder()
+				.addDescription("description")
+				.addExpires("2020-04-05T14:00:00.00Z")
+				.addThrottling(1)
+				.addEntities("hola", "type")
+				.addCondition("pressures")
+				.addReturnedAttribute("id")
+				.addReturnedAttribute("type")
+				.addReturnedAttribute("CO")
+				.addReturnedAttribute("NO2")
+				.addReturnedAttribute("O3")
+				.addReturnedAttribute("location").addReturnedAttributesFormat("keyValues")
+				.addUrl("url" + "/notifications")
+				.addMethodInvocation("POST").createJson();
+		System.out.println(t);
 
 	}
 }

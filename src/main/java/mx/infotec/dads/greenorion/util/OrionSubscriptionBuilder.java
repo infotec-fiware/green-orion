@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import mx.infotec.dads.greenorion.integration.orion.Condition;
 import mx.infotec.dads.greenorion.integration.orion.Entity;
 import mx.infotec.dads.greenorion.integration.orion.Notification;
@@ -23,13 +26,13 @@ public class OrionSubscriptionBuilder {
 		this.os = os;
 	}
 
-	public static OrionSubscriptionBuilder createBuilder() {
+	public static OrionSubscriptionBuilder builder() {
 		OrionSubscription os = new OrionSubscription();
 		Subject subject = new Subject();
 		subject.setEntities(new ArrayList<>());
-		subject.setCondition(new Condition(new ArrayList<>()));
+		subject.setCondition(new Condition());
 		os.setSubject(subject);
-		os.setNotification(new Notification(new ArrayList<>()));
+		os.setNotification(new Notification());
 		return new OrionSubscriptionBuilder(os);
 	}
 
@@ -59,7 +62,7 @@ public class OrionSubscriptionBuilder {
 	}
 
 	public OrionSubscriptionBuilder addMethodInvocation(String method) {
-		os.getNotification().getHttp().getAdditionalProperties().put("method", method);
+		os.getNotification().getHttp().setMethod(method);
 		return this;
 	}
 
@@ -69,7 +72,7 @@ public class OrionSubscriptionBuilder {
 	}
 
 	public OrionSubscriptionBuilder addReturnedAttributesFormat(String attrsFormat) {
-		os.getNotification().getAdditionalProperties().put("attrsFormat", attrsFormat);
+		os.getNotification().setAttrsFormat(attrsFormat);
 		return this;
 	}
 
@@ -78,13 +81,17 @@ public class OrionSubscriptionBuilder {
 		return this;
 	}
 
-	public JSONObject createJsonObject() {
-		return new JSONObject(this.os);
+	public String createJson() {
+		try {
+			return new ObjectMapper().writeValueAsString(this.os);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException("OrionSubscriptionBuilder Exception:", e);
+		}
 	}
 
 	public static void main(String[] args) {
-		JSONObject t = OrionSubscriptionBuilder.createBuilder().addDescription("description").addCondition("df")
-				.addCondition("newCondition").addEntities("2345", "type").addReturnedAttribute("ff").createJsonObject();
-		System.out.println(t.toString());
+		String t = OrionSubscriptionBuilder.builder().addDescription("description").addCondition("df")
+				.addMethodInvocation("POST").addCondition("holamundo").addEntities("2345", "type")
+				.addReturnedAttribute("ff").createJson();
 	}
 }

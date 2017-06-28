@@ -1,6 +1,7 @@
 
 package mx.infotec.dads.greenorion.integration.orion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,51 +13,76 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "http", "attrs" })
+@JsonPropertyOrder({
+    "http",
+    "httpCustom",
+    "attrs",
+    "exceptAttrs",
+    "attrsFormat"
+})
 public class Notification {
 
-	@JsonProperty("http")
-	private Http http;
-	@JsonProperty("attrs")
-	private List<String> attrs = null;
-	@JsonIgnore
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @JsonProperty("http")
+    private Http http;
+    @JsonProperty("httpCustom")
+    private HttpCustom httpCustom;
+    @JsonProperty("attrs")
+    private List<String> attrs = new ArrayList<>();
+    @JsonProperty("exceptAttrs")
+    private List<String> exceptAttrs = new ArrayList<>();
+    @JsonProperty("attrsFormat")
+    private String attrsFormat;
 
-	public Notification() {
+    public Notification() {
+	this.http = new Http();
 	}
+    @JsonProperty("http")
+    public Http getHttp() {
+        return http;
+    }
 
-	public Notification(List<String> attrs) {
-		this.attrs = attrs;
-	}
+    @JsonProperty("http")
+    public void setHttp(Http http) {
+        this.http = http;
+    }
 
-	@JsonProperty("http")
-	public Http getHttp() {
-		return http;
-	}
+    @JsonProperty("httpCustom")
+    public HttpCustom getHttpCustom() {
+        return httpCustom;
+    }
 
-	@JsonProperty("http")
-	public void setHttp(Http http) {
-		this.http = http;
-	}
+    @JsonProperty("httpCustom")
+    public void setHttpCustom(HttpCustom httpCustom) {
+        this.httpCustom = httpCustom;
+    }
 
-	@JsonProperty("attrs")
-	public List<String> getAttrs() {
-		return attrs;
-	}
+    @JsonProperty("attrs")
+    public List<String> getAttrs() {
+        return attrs;
+    }
 
-	@JsonProperty("attrs")
-	public void setAttrs(List<String> attrs) {
-		this.attrs = attrs;
-	}
+    @JsonProperty("attrs")
+    public void setAttrs(List<String> attrs) {
+        this.attrs = attrs;
+    }
 
-	@JsonAnyGetter
-	public Map<String, Object> getAdditionalProperties() {
-		return this.additionalProperties;
-	}
+    @JsonProperty("exceptAttrs")
+    public List<String> getExceptAttrs() {
+        return exceptAttrs;
+    }
 
-	@JsonAnySetter
-	public void setAdditionalProperty(String name, Object value) {
-		this.additionalProperties.put(name, value);
-	}
+    @JsonProperty("exceptAttrs")
+    public void setExceptAttrs(List<String> exceptAttrs) {
+        this.exceptAttrs = exceptAttrs;
+    }
 
+    @JsonProperty("attrsFormat")
+    public String getAttrsFormat() {
+        return attrsFormat;
+    }
+
+    @JsonProperty("attrsFormat")
+    public void setAttrsFormat(String attrsFormat) {
+        this.attrsFormat = attrsFormat;
+    }
 }

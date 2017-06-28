@@ -85,9 +85,70 @@ Then run:
 
 For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`yo jhipster:docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
 
+
+## Json for notification
+
+
+{
+  "id": "",
+  "description": "One subscription to rule them all",
+  "subject": {
+    "entities": [
+      {
+        "id": "",
+        "idPattern": ".*",
+        "type": "Room",
+        "typePattern": ""
+      }
+    ],
+    "condition": {
+      "attrs": [
+        "temperature"
+      ],
+      "expression": {
+        "q": "temperature>40",
+        "mq": "",
+        "georel": "",
+        "geometry": "",
+        "coords": ""
+      }
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://localhost:1234",
+      "method": "POST"
+    },
+    "httpCustom": {
+      "url": "http://localhost:1234",
+      "headers": "",
+      "qs": "",
+      "method": "POST",
+      "payload": "payload"
+    },
+    "attrs": [
+      "temperature",
+      "humidity"
+    ],
+    "exceptAttrs": [
+      "temperature",
+      "humidity"
+    ],
+    "attrsFormat": "normalized"
+  },
+  "expires": "2016-04-05T14:00:00.00Z",
+  "status": "active",
+  "throttling": 5
+}
+
+
+
 ## Continuous Integration (optional)
 
 To configure CI for your project, run the ci-cd sub-generator (`yo jhipster:ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
+
+## Orion Context broker
+
 
 [JHipster Homepage and latest documentation]: https://jhipster.github.io
 [JHipster 4.0.8 archive]: https://jhipster.github.io/documentation-archive/v4.0.8

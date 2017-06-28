@@ -11,18 +11,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "id", "type" })
+@JsonPropertyOrder({ "id", "idPattern", "type", "typePattern" })
 public class Entity {
 
 	@JsonProperty("id")
 	private String id;
+	@JsonProperty("idPattern")
+	private String idPattern;
 	@JsonProperty("type")
 	private String type;
-	@JsonIgnore
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	@JsonProperty("typePattern")
+	private String typePattern;
 
 	public Entity() {
-
 	}
 
 	public Entity(String id, String type) {
@@ -40,6 +41,16 @@ public class Entity {
 		this.id = id;
 	}
 
+	@JsonProperty("idPattern")
+	public String getIdPattern() {
+		return idPattern;
+	}
+
+	@JsonProperty("idPattern")
+	public void setIdPattern(String idPattern) {
+		this.idPattern = idPattern;
+	}
+
 	@JsonProperty("type")
 	public String getType() {
 		return type;
@@ -50,14 +61,13 @@ public class Entity {
 		this.type = type;
 	}
 
-	@JsonAnyGetter
-	public Map<String, Object> getAdditionalProperties() {
-		return this.additionalProperties;
+	@JsonProperty("typePattern")
+	public String getTypePattern() {
+		return typePattern;
 	}
 
-	@JsonAnySetter
-	public void setAdditionalProperty(String name, Object value) {
-		this.additionalProperties.put(name, value);
+	@JsonProperty("typePattern")
+	public void setTypePattern(String typePattern) {
+		this.typePattern = typePattern;
 	}
-
 }
